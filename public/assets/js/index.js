@@ -17,10 +17,11 @@ const getNotes = () => {
 
 // A function for saving a note to the db
 const saveNote = (note) => {
+  console.log(note);
   return $.ajax({
     url: "/api/notes",
     data: note,
-    method: "POST",
+    method: "POST"
   });
 };
 
@@ -54,6 +55,8 @@ const handleNoteSave = function () {
   const newNote = {
     title: $noteTitle.val(),
     text: $noteText.val(),
+    // Formula to create random ID courtesy of: https://gist.github.com/6174/6062387 
+    id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
   };
 
   saveNote(newNote).then(() => {
