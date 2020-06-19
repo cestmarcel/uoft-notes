@@ -5,7 +5,7 @@ const $newNoteBtn = $(".new-note");
 const $noteList = $(".list-container .list-group");
 
 // activeNote is used to keep track of the note in the textarea
-let activeNote = {};
+let activeNote = {}
 
 // A function for getting all notes from the db
 const getNotes = () => {
@@ -128,6 +128,11 @@ const renderNoteList = (notes) => {
 
   if (notes.length === 0) {
     noteListItems.push(create$li("No saved Notes", false));
+  } else {
+    // Make latest note display on load of application
+    var latestIndex = notes.length - 1;
+    activeNote = notes[latestIndex];
+    renderActiveNote();
   }
 
   notes.forEach((note) => {
