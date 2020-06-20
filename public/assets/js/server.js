@@ -58,8 +58,6 @@ app.delete("/api/notes/:id", function(req, res){
     var chosenNote = req.params.id;
     var toDelete = noteList.findIndex(note => note.id == chosenNote)
     noteList.splice(toDelete, 1);
-    console.log(noteList);
-    // res.send(noteList);
     var noteToSave = JSON.stringify(noteList);
     fs.writeFile(path.join(__dirname, "../../../db/db.json"), noteToSave, function (err) {
         if(err){
