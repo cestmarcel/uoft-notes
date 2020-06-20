@@ -4,7 +4,7 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-app.use(express.static('../../'))
+app.use(express.static(path.join(__dirname, '../../')));
 
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
@@ -23,7 +23,7 @@ app.get('/notes', function(req, res) {
 
 // Load contents of db.json as note list upon starting the application
 function compileInitialNoteList(){
-    var loadNotes = fs.readFileSync("../../../db/db.json", "utf-8");
+    var loadNotes = fs.readFileSync(path.join(__dirname, "../../../db/db.json"), "utf-8");
     if(loadNotes){
         var parsedInput = JSON.parse(loadNotes);
         return parsedInput;
@@ -43,7 +43,7 @@ app.post( "/api/notes", function( req, res ){
     const newNote = req.body;
     noteList.push(newNote);
     var noteToSave = JSON.stringify(noteList);
-    fs.writeFile("../../../db/db.json", noteToSave, function (err) {
+    fs.writeFile(path.join(__dirname, "../../../db/db.json"), noteToSave, function (err) {
         if(err){
             res.send({status: false, message: "Error"});
         } else {
@@ -61,7 +61,7 @@ app.delete("/api/notes/:id", function(req, res){
     console.log(noteList);
     // res.send(noteList);
     var noteToSave = JSON.stringify(noteList);
-    fs.writeFile("../../../db/db.json", noteToSave, function (err) {
+    fs.writeFile(path.join(__dirname, "../../../db/db.json"), noteToSave, function (err) {
         if(err){
             res.send({status: false, message: "Error"});
         } else {
